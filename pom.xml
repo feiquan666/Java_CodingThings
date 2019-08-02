@@ -56,6 +56,12 @@
             <artifactId>commons-codec</artifactId>
             <version>1.9</version>
         </dependency>
+<!--        引入Quartz包-->
+        <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz</artifactId>
+            <version>2.2.3</version>
+        </dependency>
 
     </dependencies>
 
