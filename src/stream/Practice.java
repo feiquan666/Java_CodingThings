@@ -7,10 +7,8 @@ import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.function.Predicate;
-import java.util.stream.BaseStream;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
+import java.util.function.Supplier;
+import java.util.stream.*;
 
 public class Practice {
     MyStudent 武则天 = new MyStudent("武则天",18,'女',new BigDecimal("0.64"));
@@ -123,10 +121,25 @@ public class Practice {
     }
     /**
      * 测试findAny方法
+     * 测试findFirst方法
     */
     @Test
     public void test012(){
         System.out.println(this.students.stream().findAny());
         System.out.println(this.students.stream().findFirst());
+    }
+    /**
+     * 测试flatMap
+    */
+    @Test
+    public void test013(){
+       String[] words = {"Hello", "World"};
+       List wos = Arrays.stream(words).flatMap(word -> Arrays.stream(word.split(""))).collect(Collectors.toList());
+       wos.forEach(System.out::println);
+    }
+    @Test
+    public void test014(){
+        List<String> a = new ArrayList<>();
+        Stream<String> stream1 = a.stream();
     }
 }
