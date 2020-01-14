@@ -1,6 +1,5 @@
 package variety;
 
-import sun.misc.Unsafe;
 
 public class LinkedStack<T> {
     private class Node {
