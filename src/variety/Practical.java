@@ -1,16 +1,21 @@
 package variety;
 
-public class Practical<A,B> {
-    public final A first;
-    public final B second;
-    public Practical(A a,B b){
-        this.first = a;
-        this.second = b;
+import org.junit.Test;
+import variety.interfaces.Coffee;
+
+import java.time.LocalDateTime;
+import java.util.*;
+
+public class Practical{
+
+    @Test
+    public void test001(){
+        toPrint("i",28,this.getClass().getName());
+        toPrint(1, this.getClass().getMethods(),15);
+        toPrint(LocalDateTime.now(),5.6d,7.0);
+        toPrint(this.getClass().getMethods(),32,99999);
     }
-    public String toString(){
-        return "("+first+","+second+")";
+    public <X> void toPrint(X... x){
+        Arrays.stream(x).forEach(System.out::print);
     }
 }
-class A{}
-class B extends A{}
-class C extends B{}
