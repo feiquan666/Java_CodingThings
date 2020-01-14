@@ -39,7 +39,11 @@
             <artifactId>spring-web</artifactId>
             <version>5.0.9.RELEASE</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.openjdk.jol</groupId>
+            <artifactId>jol-core</artifactId>
+            <version>0.9</version>
+        </dependency>
         <!-- 上传文件组件包 -->
         <dependency>
             <groupId>commons-fileupload</groupId>
