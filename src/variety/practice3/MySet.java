@@ -24,7 +24,7 @@ public class MySet {
     }
 
     public static <T> Set<T> complement(Set<T> a, Set<T> b) {
-        return difference(union(a, b), intersection(a, b)); // a,b交集的补集
+        return difference(union(a, b), a); // a,b交集的补集
     }
 
     public static void main(String[] args) {
@@ -35,7 +35,6 @@ public class MySet {
         printSet(difference(a,b));
         printSet(complement(a,b));
     }
-
     public static  <T> void printSet(Set<T> set) {
         set.forEach(item -> {
             System.out.print(item + "\t");
