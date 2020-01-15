@@ -1,6 +1,7 @@
 package stream;
 
 import org.junit.Test;
+import org.openjdk.jol.info.ClassLayout;
 import stream.model.MyStudent;
 
 import java.math.BigDecimal;
@@ -11,6 +12,17 @@ import java.util.function.Supplier;
 import java.util.stream.*;
 
 public class Practice {
+    public static void main(String[] args) {
+        Object o = new Object();
+        List<Integer> list = new ArrayList<Integer>();
+
+        String s = ClassLayout.parseInstance(o).toPrintable();
+        System.out.println(s);
+        System.out.println("################################");
+        synchronized (o){
+            System.out.println(ClassLayout.parseInstance(o).toPrintable());
+        }
+    }
     MyStudent 武则天 = new MyStudent("武则天",18,'女',new BigDecimal("0.64"));
     List<MyStudent> students = new ArrayList<>(Arrays.asList(new MyStudent("张三",25,'男',new BigDecimal("82.64")),
             new MyStudent("李四",45,'女',new BigDecimal("98.64")),

@@ -1,5 +1,6 @@
 package variety;
 
+
 public class LinkedStack<T> {
     private class Node {
         private T item;
@@ -36,6 +37,7 @@ public class LinkedStack<T> {
 
     public static void main(String[] args) {
         LinkedStack<String> linkedStack = new LinkedStack<>();
+
         for (String item : "! You Love I".split(" ")) {
             linkedStack.push(item);
         }
