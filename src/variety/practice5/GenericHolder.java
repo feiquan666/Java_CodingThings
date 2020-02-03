@@ -1,9 +1,10 @@
 package variety.practice5;
 
+import org.omg.CORBA.Object;
+
 public class GenericHolder<T> {
     private T obj;
     public void set(T obj){
-        if(obj instanceof String){}
         this.obj = obj;
     }
     public T get(){
