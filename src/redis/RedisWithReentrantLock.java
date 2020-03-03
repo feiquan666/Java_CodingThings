@@ -1,29 +1,75 @@
 package redis;
 
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.Pipeline;
 import redis.clients.jedis.params.SetParams;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class RedisWithReentrantLock {
-    private ThreadLocal<Map<String,Integer>> lockers = new ThreadLocal<>();
+
+    private ThreadLocal<Map<String, Integer>> lockers = new ThreadLocal<>();
+
     private Jedis jedis;
-    public RedisWithReentrantLock(Jedis jedis){
+
+    public RedisWithReentrantLock(Jedis jedis) {
         this.jedis = jedis;
     }
-    private boolean _lock(String key){
-        return jedis.set(key,"",new SetParams()) != null;
+
+    private boolean _lock(String key) {
+        return jedis.set(key, "", new SetParams().ex(5).nx()) != null;
     }
-    private void  _unlock(String key){
+
+    private void _unlock(String key) {
         jedis.del(key);
     }
-    private Map<String,Integer> currentLockers(){
-        Map<String,Integer> refs = this.lockers.get();
-        if (refs != null){
+
+    private Map<String, Integer> currentLockers() {
+        Map<String, Integer> refs = lockers.get();
+        if (refs != null) {
             return refs;
         }
-        this.lockers.set(new HashMap<>());
-        return this.lockers.get();
+        lockers.set(new HashMap<>());
+        return lockers.get();
     }
+
+    public boolean lock(String key) {
+        Map<String, Integer> refs = currentLockers();
+        Integer refCnt = refs.get(key);
+        if (refCnt != null) {
+            refs.put(key, refCnt + 1);
+            return true;
+        }
+        boolean ok = this._lock(key);
+        if (!ok) {
+            return false;
+        }
+        refs.put(key, 1);
+        return true;
+    }
+
+    public boolean unlock(String key) {
+        Map<String, Integer> refs = currentLockers();
+        Integer refCnt = refs.get(key);
+        if (refCnt == null) {
+            return false;
+        }
+        refCnt -= 1;
+        if (refCnt > 0) {
+            refs.put(key, refCnt);
+        } else {
+            refs.remove(key);
+            this._unlock(key);
+        }
+        return true;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(123);
+        Jedis jedis = new Jedis("39.108.62.51");
+        jedis.auth("123");
+        jedis.set("gf","gf");
+    }
+
 }
